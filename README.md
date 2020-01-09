@@ -20,3 +20,20 @@ In the repository of the project:
 ```
 php bin/console doctrine:fixtures:load
 ```
+
+API Combinations
+```
+Example local combination api with parameter:
+localhost:8000/getCombinations/?combinations[]=4&combinations[]=6&combinations[]=8
+```
+
+Doc API Combinations
+
+```
+Routes:
+host:port/getCombinations/?combinations
+Example:
+localhost:8000/getCombinations/
+Parameters:
+combinations
+```

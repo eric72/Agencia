@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Clients;
-use App\Entity\Gestionnaires;
+use App\Entity\Managers;
 use App\Entity\Lots;
+use App\Services\ManagerServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -18,10 +20,12 @@ class ManagerController extends AbstractController
 {
 
     private $em;
+    private $managerServices;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, ManagerServices $managerServices)
     {
         $this->em = $em;
+        $this->managerServices = $managerServices;
     }
 
     /**
@@ -35,22 +39,24 @@ class ManagerController extends AbstractController
     }
 
     /**
-     * @Route("/getCombinations", name="getCombinations", methods={"GET"})
+     * @Route("/getCombinations/", name="getCombinations", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function getCombinations() : JsonResponse
+    public function getCombinations(Request $request) : JsonResponse
     {
         try {
 
-            // $gestionnaires = $this->em->getRepository(Gestionnaires::class)->findOneBy(["id" => $request->request->get('id')]);
-            $gestionnaires = new Gestionnaires();
-            // TODO: Trouver le nombre de combinaisons possible
+            $combinations = $request->query->get('combinations');
 
-            // TODO: Retourner le nombre de combinaisons possible
-            return new JsonResponse('toto', 200);
+            /*$this->managerServices->resolveCombinations($combinations);
+            dump($this->managerServices->resolveCombinations($combinations));*/
+
+            return new JsonResponse(['Output' => $this->managerServices->resolveCombinations($combinations)], 200);
 
         } catch(\Exception $exception) {
 
-            return new JsonResponse(['error' => $exception.message], $exception->getCode());
+            return new JsonResponse(['error' => $exception->getMessage()], 404);
         }
 
     }

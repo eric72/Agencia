@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Gestionnaires;
+use App\Entity\Managers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Gestionnaires|null find($id, $lockMode = null, $lockVersion = null)
- * @method Gestionnaires|null findOneBy(array $criteria, array $orderBy = null)
- * @method Gestionnaires[]    findAll()
- * @method Gestionnaires[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Managers|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Managers|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Managers[]    findAll()
+ * @method Managers[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class GestionnairesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Gestionnaires::class);
+        parent::__construct($registry, Managers::class);
     }
 
     // /**
-    //  * @return Gestionnaires[] Returns an array of Gestionnaires objects
+    //  * @return Managers[] Returns an array of Managers objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class GestionnairesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Gestionnaires
+    public function findOneBySomeField($value): ?Managers
     {
         return $this->createQueryBuilder('g')
             ->andWhere('g.exampleField = :val')

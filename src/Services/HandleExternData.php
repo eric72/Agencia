@@ -9,7 +9,7 @@
 namespace App\Services;
 
 use App\Entity\Clients;
-use App\Entity\Gestionnaires;
+use App\Entity\Managers;
 use App\Entity\Lots;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -29,18 +29,18 @@ class HandleExternData
     }
 
     public function loadJsonGestionnaires() {
-        $gestionnairesFile = file_get_contents("./src/DataFixtures/fixtures/gestionnaires.json");
+        $gestionnairesFile = file_get_contents("./src/DataFixtures/fixtures/managers.json");
         $contents = utf8_encode($gestionnairesFile);
         $gestionnairesData = json_decode(str_replace("/([{,])([a-zA-Z][^: ]+):/", "$1\"$2\":", $contents), true);
 
         foreach ($gestionnairesData as $key => $value) {
             set_time_limit(300);
-            $gestionnaire = new Gestionnaires();
-            $gestionnaire->set_Id($value['_id']['$oid']);
-            $gestionnaire->setFullname($value['fullname']);
-            $gestionnaire->setNumero(serialize($value['numeros']));
+            $manager = new Managers();
+            $manager->set_Id($value['_id']['$oid']);
+            $manager->setFullname($value['fullname']);
+            $manager->setNumero(serialize($value['numeros']));
 
-            $this->em->persist($gestionnaire);
+            $this->em->persist($manager);
             $this->em->flush();
         }
     }
